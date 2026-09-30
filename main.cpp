@@ -1,131 +1,90 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
-// Klasa drzewa BST
-class Drzewo {
-private:
+struct Wezel {
+    int wartosc;
+    Wezel* lewo;
+    Wezel* prawo;
 
-    // Wezel drzewa
-    struct Wezel {
-        int wartosc;
-        Wezel* lewo;
-        Wezel* prawo;
-
-        // Konstruktor wezla
-        Wezel(int x) {
-            wartosc = x;
-            lewo = nullptr;
-            prawo = nullptr;
-        }
-    };
-
-    Wezel* korzen; // Korzen drzewa
-
-    // Wstawianie elementu
-    void wstaw(Wezel*& wezel, int x) {
-        if (wezel == nullptr) {
-            wezel = new Wezel(x);
-            return;
-        }
-
-        // Mniejsze w lewo, rowne i wieksze w prawo
-        if (x < wezel->wartosc) {
-            wstaw(wezel->lewo, x);
-        } else {
-            wstaw(wezel->prawo, x);
-        }
-    }
-
-    // Wyswietlanie rosnaco
-    void pokazRosnaco(Wezel* wezel) {
-        if (wezel == nullptr)
-            return;
-
-        pokazRosnaco(wezel->lewo);
-        cout << wezel->wartosc << " ";
-        pokazRosnaco(wezel->prawo);
-    }
-
-    // Wyswietlanie drzewa
-    void drukuj(Wezel* wezel, int odstep) {
-        if (wezel == nullptr)
-            return;
-
-        drukuj(wezel->prawo, odstep + 1);
-
-        for (int i = 0; i < odstep; i++)
-            cout << "    ";
-
-        cout << wezel->wartosc << "\n";
-
-        drukuj(wezel->lewo, odstep + 1);
-    }
-
-    // Usuwanie drzewa
-    void usunDrzewo(Wezel* wezel) {
-        if (wezel == nullptr)
-            return;
-
-        usunDrzewo(wezel->lewo);
-        usunDrzewo(wezel->prawo);
-        delete wezel;
-    }
-
-public:
-
-    // Konstruktor
-    Drzewo() {
-        korzen = nullptr;
-    }
-
-    // Dodanie elementu
-    void wstaw(int x) {
-        wstaw(korzen, x);
-    }
-
-    // Wyswietlenie rosnaco
-    void pokazRosnaco() {
-        pokazRosnaco(korzen);
-        cout << endl;
-    }
-
-    // Wyswietlenie drzewa
-    void drukuj() {
-        drukuj(korzen, 0);
-    }
-
-    // Destruktor
-    ~Drzewo() {
-        usunDrzewo(korzen);
+    Wezel(int x) {
+        wartosc = x;
+        lewo = nullptr;
+        prawo = nullptr;
     }
 };
 
+void wstaw(Wezel*& korzen, int x) {
+    if (korzen == nullptr) {
+        korzen = new Wezel(x);
+        return;
+    }
+
+    if (x < korzen->wartosc) {
+        wstaw(korzen->lewo, x);
+    } else {
+        wstaw(korzen->prawo, x);
+    }
+}
+
+void pokazRosnaco(Wezel* korzen) {
+    if (korzen == nullptr)
+        return;
+
+    pokazRosnaco(korzen->lewo);
+    cout << korzen->wartosc << " ";
+    pokazRosnaco(korzen->prawo);
+}
+
+void drukuj(Wezel* korzen, int odstep) {
+    if (korzen == nullptr)
+        return;
+
+    drukuj(korzen->prawo, odstep + 1);
+
+    for (int i = 0; i < odstep; i++)
+        cout << "    ";
+
+    cout << korzen->wartosc << "\n";
+
+    drukuj(korzen->lewo, odstep + 1);
+}
+
+void usunDrzewo(Wezel* korzen) {
+    if (korzen == nullptr)
+        return;
+
+    usunDrzewo(korzen->lewo);
+    usunDrzewo(korzen->prawo);
+    delete korzen;
+}
+
 int main() {
-    Drzewo drzewo; // Utworzenie drzewa
+    Wezel* drzewo = nullptr;
     int ilosc;
 
-    // Pobranie liczby elementow
     cout << "Podaj liczbe elementow: ";
     cin >> ilosc;
 
-    // Wczytanie elementow
-    for (int i = 0; i < ilosc; i++) {
+    for (int i = 0; i < ilosc; ++i) {
         int x;
 
         cout << "Element " << i + 1 << ": ";
         cin >> x;
 
-        drzewo.wstaw(x); // Dodanie elementu do drzewa
+        wstaw(drzewo, x);
     }
 
-    // Wyswietlenie drzewa
     cout << "\nZawartosc drzewa:\n";
-    drzewo.drukuj();
+    drukuj(drzewo, 0);
 
-    // Wyswietlenie elementow rosnaco
     cout << "\nKolejnosc rosnaca: ";
-    drzewo.pokazRosnaco();
+    pokazRosnaco(drzewo);
+    cout << "\n";
+
+    usunDrzewo(drzewo);
+    drzewo = nullptr;
 
     return 0;
 }
