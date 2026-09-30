@@ -1,4 +1,105 @@
-#include <iostream>
+Drzewo BST w C++
+Opis
+
+Program przedstawia implementację binarnego drzewa wyszukiwania (BST) w języku C++.
+
+Drzewo zostało stworzone przy użyciu klasy Drzewo, która umożliwia:
+
+dodawanie elementów,
+
+wyświetlanie drzewa,
+
+wyświetlanie elementów w kolejności rosnącej,
+
+automatyczne usuwanie drzewa z pamięci.
+
+Zasada działania
+
+Dla każdego węzła:
+
+wartości mniejsze od wartości węzła trafiają do lewego poddrzewa,
+
+wartości równe lub większe trafiają do prawego poddrzewa.
+
+Struktura programu
+Wezel
+
+Przechowuje:
+
+wartosc – wartość elementu,
+
+lewo – wskaźnik na lewe dziecko,
+
+prawo – wskaźnik na prawe dziecko.
+
+wstaw()
+
+Dodaje nowy element do drzewa zgodnie z zasadami BST.
+
+pokazRosnaco()
+
+Wyświetla elementy w kolejności rosnącej za pomocą przejścia:
+
+lewo → korzeń → prawo
+
+drukuj()
+
+Wyświetla strukturę drzewa w postaci tekstowej.
+
+usunDrzewo()
+
+Usuwa wszystkie węzły drzewa i zwalnia zajętą pamięć.
+
+Konstruktor i destruktor
+
+Konstruktor ustawia początkowo pusty korzeń.
+
+Destruktor automatycznie usuwa całe drzewo po zakończeniu działania obiektu.
+
+Przykładowe dane
+Podaj liczbe elementow: 7
+Element 1: 8
+Element 2: 3
+Element 3: 10
+Element 4: 1
+Element 5: 6
+Element 6: 6
+Element 7: 14
+
+Przykładowy wynik
+Zawartosc drzewa:
+        14
+    10
+8
+            6
+        6
+    3
+        1
+
+Kolejnosc rosnaca: 1 3 6 6 8 10 14
+
+Kompilacja
+
+Program można skompilować za pomocą:
+
+g++ main.cpp -o drzewo
+
+
+Uruchomienie:
+
+./drzewo
+
+Technologie
+
+C++
+
+programowanie obiektowe
+
+rekurencja
+
+dynamiczna alokacja pamięci
+
+binarne drzewo wyszukiwania (BST)#include <iostream>
 
 using namespace std;
 
